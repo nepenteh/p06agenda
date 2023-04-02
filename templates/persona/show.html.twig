@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Persona{% endblock %}
+
+{% block body %}
+    <h1>Persona</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ persona.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ persona.Nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido1</th>
+                <td>{{ persona.Apellido1 }}</td>
+            </tr>
+            <tr>
+                <th>Apellido2</th>
+                <td>{{ persona.Apellido2 }}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{ persona.Telefono }}</td>
+            </tr>
+            <tr>
+                <th>CorreoElectronico</th>
+                <td>{{ persona.CorreoElectronico }}</td>
+            </tr>
+            <tr>
+                <th>FechaNacimiento</th>
+                <td>{{ persona.FechaNacimiento ? persona.FechaNacimiento|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_persona_index') }}">back to list</a>
+
+    <a href="{{ path('app_persona_edit', {'id': persona.id}) }}">edit</a>
+
+    {{ include('persona/_delete_form.html.twig') }}
+{% endblock %}
