@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PersonaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,14 +25,19 @@ class Persona
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $Apellido2 = null;
 
-    #[ORM\Column(length: 20, nullable: true)]
-    private ?string $Telefono = null;
-
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $CorreoElectronico = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $FechaNacimiento = null;
+
+    #[ORM\OneToMany(mappedBy: 'Persona', targetEntity: Telefono::class, orphanRemoval: true)]
+    private Collection $Telefonos;
+
+    public function __construct()
+    {
+        $this->Telefonos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -73,18 +80,6 @@ class Persona
         return $this;
     }
 
-    public function getTelefono(): ?string
-    {
-        return $this->Telefono;
-    }
-
-    public function setTelefono(?string $Telefono): self
-    {
-        $this->Telefono = $Telefono;
-
-        return $this;
-    }
-
     public function getCorreoElectronico(): ?string
     {
         return $this->CorreoElectronico;
@@ -107,5 +102,40 @@ class Persona
         $this->FechaNacimiento = $FechaNacimiento;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Telefono>
+     */
+    public function getTelefonos(): Collection
+    {
+        return $this->Telefonos;
+    }
+
+    public function addTelefono(Telefono $telefono): self
+    {
+        if (!$this->Telefonos->contains($telefono)) {
+            $this->Telefonos->add($telefono);
+            $telefono->setPersona($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTelefono(Telefono $telefono): self
+    {
+        if ($this->Telefonos->removeElement($telefono)) {
+            // set the owning side to null (unless already changed)
+            if ($telefono->getPersona() === $this) {
+                $telefono->setPersona(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->Apellido1." ".$this->Apellido2.", ".$this->Nombre;
     }
 }

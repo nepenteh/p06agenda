@@ -12,7 +12,6 @@
                 <th>Nombre</th>
                 <th>Apellido1</th>
                 <th>Apellido2</th>
-                <th>Telefono</th>
                 <th>CorreoElectronico</th>
                 <th>FechaNacimiento</th>
                 <th>actions</th>
@@ -25,7 +24,6 @@
                 <td>{{ persona.Nombre }}</td>
                 <td>{{ persona.Apellido1 }}</td>
                 <td>{{ persona.Apellido2 }}</td>
-                <td>{{ persona.Telefono }}</td>
                 <td>{{ persona.CorreoElectronico }}</td>
                 <td>{{ persona.FechaNacimiento ? persona.FechaNacimiento|date('Y-m-d') : '' }}</td>
                 <td>
@@ -35,7 +33,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

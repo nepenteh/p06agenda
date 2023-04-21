@@ -3,14 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Persona;
-use App\Form\PersonaType;
+use App\Form\Persona1Type;
 use App\Repository\PersonaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(['/persona','/'])]
+#[Route('/persona')]
 class PersonaController extends AbstractController
 {
     #[Route('/', name: 'app_persona_index', methods: ['GET'])]
@@ -25,7 +25,7 @@ class PersonaController extends AbstractController
     public function new(Request $request, PersonaRepository $personaRepository): Response
     {
         $persona = new Persona();
-        $form = $this->createForm(PersonaType::class, $persona);
+        $form = $this->createForm(Persona1Type::class, $persona);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +51,7 @@ class PersonaController extends AbstractController
     #[Route('/{id}/edit', name: 'app_persona_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Persona $persona, PersonaRepository $personaRepository): Response
     {
-        $form = $this->createForm(PersonaType::class, $persona);
+        $form = $this->createForm(Persona1Type::class, $persona);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
